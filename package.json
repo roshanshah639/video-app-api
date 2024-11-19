@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "videotube-api-backend",
   "version": "1.0.0",
-  "description": "A nodejs video project inspired by youtube, using mern stack technologies",
+  "description": "A nodejs video project inspired by youtube using nodejs, express, javascript, mongodb, mongoose etc.",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
@@ -10,14 +10,17 @@
     "dev": "nodemon -r dotenv/config src/index.js"
   },
   "keywords": [
+    "Nodejs",
     "Javascript",
-    "express",
-    "nodejs",
-    "backend",
-    "mern",
-    "stack"
+    "Express",
+    "MongoDB",
+    "Mongoose",
+    "Backend",
+    "Mernstack",
+    "Roshan",
+    "Dev."
   ],
-  "author": "RBS",
+  "author": "Roshan",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.7",
@@ -30,9 +33,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^5.0.1",
-    "express-fileupload": "^1.5.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.8.0",
+    "mongoose": "^8.8.1",
     "multer": "^1.4.5-lts.1"
   }
 }

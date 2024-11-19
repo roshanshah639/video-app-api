@@ -8,29 +8,33 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// upload on cloudinary method
 const uploadOnCloudinary = async (localFilePath) => {
   try {
-    // if localFilePath is  present
+    // if local file path is not present
     if (!localFilePath) return null;
 
-    // upload file to cloudinar
+    // upload file to cloudinary
     const response = await cloudinary.uploader.upload(localFilePath, {
       resource_type: "auto",
     });
 
-    // Log the success
-    console.log("File uploaded successfully on cloudinary", response.url);
+    // log the success
+    console.log(
+      "File has been uploaded to cloudiary successfully",
+      response.url
+    );
 
-    // delete the locally saved temp file
+    // delete the locally saved temp file rom server
     fs.unlinkSync(localFilePath);
 
     // return the response
     return response;
   } catch (error) {
     // Log the error
-    console.log("Failed to upload files on cloudinary", error);
+    console.error("Failed to upload file to cloudinary", error);
 
-    // delete the locally saved temp file
+    // delete the locally saved temp file rom server
     fs.unlinkSync(localFilePath);
 
     // return null
@@ -38,4 +42,29 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-export { uploadOnCloudinary };
+const deleteFromCloudinary = async (publicId) => {
+  try {
+    // if public id is not present
+    if (!publicId) return null;
+
+    // delete file from cloudinary
+    const response = await cloudinary.uploader.destroy(publicId);
+
+    // log the success
+    console.log(
+      "File has been deleted from cloudiary successfully",
+      response.url
+    );
+
+    // return response
+    // return response;
+  } catch (error) {
+    // Log the errors
+    console.error("Failed to delete file from cloudinary", error);
+
+    // return null
+    return null;
+  }
+};
+
+export { uploadOnCloudinary, deleteFromCloudinary };

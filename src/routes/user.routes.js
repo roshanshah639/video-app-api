@@ -12,17 +12,18 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 // router config
 const router = Router();
 
-// register user route
+// register  route
 router.route("/register").post(upload.single("logo"), registerUser);
-// login user route
+// login route
 router.route("/login").post(loginUser);
 
 // secure routes
+// logout
 router.route("/logout").post(verifyJWT, logoutUser);
 
-// subscribe channel routes
+// subscribe channel route
 router.route("/subscribe/:id").put(verifyJWT, subscribeChannel);
-// unsubscribe channel routes
+// unsubscribe channel route
 router.route("/unsubscribe/:id").put(verifyJWT, unsubscribeChannel);
 
 export default router;

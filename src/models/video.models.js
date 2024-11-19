@@ -2,9 +2,6 @@ import mongoose, { Schema } from "mongoose";
 
 const videoSchema = new Schema(
   {
-    // _id: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    // },
     title: {
       type: String,
       required: [true, "Title is required"],
@@ -13,25 +10,25 @@ const videoSchema = new Schema(
       type: String,
       required: [true, "Description is required"],
     },
-    user_id: {
+    userId: {
       type: String,
-      required: [true, "User ID is required"],
+      required: [true, "User id is required"],
     },
     videoUrl: {
       type: String, // cloudinary url
-      required: [true, "Video URL is required"],
+      required: [true, "Video file is required"],
     },
     videoId: {
       type: String,
-      required: [true, "Video ID is required"],
+      required: [true, "Video id is required"],
     },
     thumbnailUrl: {
       type: String, // cloudinary url
-      required: [true, "Thumbnail URL is required"],
+      required: [true, "Thumbnail file is required"],
     },
-    thumbnailId: {
+    thumnailId: {
       type: String,
-      required: [true, "Thumbnail ID is required"],
+      required: [true, "Thumbnail id is required"],
     },
     category: {
       type: String,
@@ -40,6 +37,7 @@ const videoSchema = new Schema(
     tags: [
       {
         type: String,
+        // required: [true, "Tag is required"],
       },
     ],
     likes: {
@@ -50,22 +48,29 @@ const videoSchema = new Schema(
       type: Number,
       default: 0,
     },
-    views: {
-      type: Number,
-      default: 0,
-    },
+
     likedBy: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
     dislikedBy: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
+    views: {
+      type: Number,
+      default: 0,
+    },
+    // comments: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Comment",
+    //   },
+    // ],
   },
   { timestamps: true }
 );

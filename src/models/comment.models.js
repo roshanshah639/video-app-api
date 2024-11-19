@@ -6,13 +6,13 @@ const commentSchema = new Schema(
       type: String,
       required: [true, "Content is required"],
     },
+    videoId: {
+      type: Schema.Types.ObjectId,
+      ref: "Video",
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
-    },
-    videoId: {
-      type: String,
-      required: [true, "Video is required"],
     },
   },
   { timestamps: true }

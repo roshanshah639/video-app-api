@@ -4,30 +4,21 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
-    // _id: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    // },
     channelName: {
       type: String,
-      required: [true, "Channel Name is required"],
+      required: [true, "Channel name is required"],
     },
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: [true, "Email already exists"],
-      trim: true,
-      lowercase: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: [true, "Phone is required"],
     },
     password: {
       type: String,
       required: [true, "Password is required"],
-    },
-    refreshToken: {
-      type: String,
     },
     logoUrl: {
       type: String, // cloudinary url
@@ -35,39 +26,45 @@ const userSchema = new Schema(
     },
     logoId: {
       type: String,
-      required: [true, "Logo Id is required"],
+      required: [true, "Logo id is required"],
     },
     subscribers: {
       type: Number,
       default: 0,
     },
+
     subscribedBy: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
     subscribedChannels: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: Schema.Types.ObjectId, 
+        ref: "User", 
       },
     ],
-    unsubsribers: {
+
+    unsubscribers: {
       type: Number,
       default: 0,
     },
+
     unsubscribedBy: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
+    refreshToken: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
 
-// has the password before use
+// hash the password before saving to db
 userSchema.pre("save", async function (next) {
   // if password is not modified
   if (!this.isModified("password")) return next();
@@ -75,6 +72,7 @@ userSchema.pre("save", async function (next) {
   // hash the password
   this.password = await bcryptjs.hash(this.password, 10);
 
+  // call to next callback
   next();
 });
 
@@ -94,9 +92,7 @@ userSchema.methods.generateAccessToken = function () {
       logoId: this.logoId,
     },
     process.env.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-    }
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY }
   );
 };
 // generate refresh token
@@ -106,9 +102,7 @@ userSchema.methods.generateRefreshToken = function () {
       _id: this._id,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
-    }
+    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
   );
 };
 

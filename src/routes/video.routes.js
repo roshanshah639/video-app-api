@@ -1,11 +1,11 @@
-import Router from "express";
+import { Router } from "express";
 import {
   addVideo,
   deleteVideo,
   dislikeVideo,
   likeVideo,
   updateVideoDetails,
-  updateVideoThumnail,
+  updateVideoThumbnail,
   viewVideo,
 } from "../controllers/video.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -14,13 +14,14 @@ import { upload } from "../middlewares/multer.middleware.js";
 // router config
 const router = Router();
 
-// add video route
+// add video
 router.route("/add-video").post(
   verifyJWT,
   upload.fields([
     {
       name: "video",
       maxCount: 1,
+      // resource_type: "video",
     },
     {
       name: "thumbnail",
@@ -30,22 +31,24 @@ router.route("/add-video").post(
   addVideo
 );
 
-// update video route
+// update video details
 router.route("/update-video-details/:id").patch(verifyJWT, updateVideoDetails);
 
-// update video thumbnail route
+// update video thumbnail
 router
   .route("/update-video-thumbnail/:id")
-  .patch(verifyJWT, upload.single("thumbnail"), updateVideoThumnail);
+  .patch(verifyJWT, upload.single("thumbnail"), updateVideoThumbnail);
 
 // delete video
 router.route("/delete-video/:id").delete(verifyJWT, deleteVideo);
 
-// like a video
+// like video
 router.route("/like-video/:id").put(verifyJWT, likeVideo);
-// dislike a video
+
+// dislike video
 router.route("/dislike-video/:id").put(verifyJWT, dislikeVideo);
-// view video
+
+// view video 
 router.route("/view-video/:id").put(viewVideo);
 
 export default router;

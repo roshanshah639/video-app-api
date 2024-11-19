@@ -1,4 +1,4 @@
-import Router from "express";
+import { Router } from "express";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   addComment,
@@ -10,14 +10,16 @@ import {
 // router config
 const router = Router();
 
-// add comment
+// add comment route
 router.route("/add-comment/:id").post(verifyJWT, addComment);
-// get all comments
+
+// get all comments route
 router.route("/get-all-comments/:id").get(getAllComments);
-// edit/update comment
+
+// edit comment route
 router.route("/edit-comments/:id").patch(verifyJWT, editComment);
 
-// delete comment
+// delete comment route
 router.route("/delete-comment/:id").delete(verifyJWT, deleteComment);
 
 export default router;
