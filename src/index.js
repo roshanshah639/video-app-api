@@ -7,7 +7,7 @@ import connectDB from "./db/connectDb.js";
 
 // server config
 const PORT = process.env.PORT || 7070;
-const HOST_NAME = process.env.HOST_NAME || "localhost";
+// const HOST_NAME = process.env.HOST_NAME || "localhost";
 
 // connect to db
 connectDB()
@@ -18,8 +18,8 @@ connectDB()
     });
 
     // start server
-    app.listen(PORT, HOST_NAME, () => {
-      console.log(`Server is running on http://${HOST_NAME}:${PORT}...`);
+    app.listen(PORT, () => {
+      console.log(`Server is running on ${PORT}`);
     });
   })
   .catch((error) => {
