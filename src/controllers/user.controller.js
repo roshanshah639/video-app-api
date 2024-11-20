@@ -159,7 +159,7 @@ const loginUser = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         {
-          loggedInUser,
+          user: loggedInUser,
           accessToken,
           refreshToken,
         },
