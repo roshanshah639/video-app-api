@@ -159,7 +159,7 @@ const loginUser = asyncHandler(async (req, res) => {
       new ApiResponse(
         200,
         {
-          user: loggedInUser,
+          loggedInUser,
           accessToken,
           refreshToken,
         },
@@ -242,9 +242,9 @@ const subscribeChannel = asyncHandler(async (req, res) => {
         $pull: {
           unsubscribedBy: user?._id,
         },
-        $push:{
+        $push: {
           subscribedBy: user?._id,
-        }
+        },
       },
       {
         new: true,
@@ -317,13 +317,13 @@ const unsubscribeChannel = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Channel not found");
   }
 
-    // if user is the owner of the channel - optional
-    if (channel?._id.toString() === user?._id.toString()) {
-      throw new ApiError(
-        403,
-        "Unauthorized - You don't have permission to unsubscribe to your own channel"
-      );
-    }
+  // if user is the owner of the channel - optional
+  if (channel?._id.toString() === user?._id.toString()) {
+    throw new ApiError(
+      403,
+      "Unauthorized - You don't have permission to unsubscribe to your own channel"
+    );
+  }
 
   // if user has not subscribed to the channel
   if (!channel?.subscribedBy?.includes(user?._id)) {
@@ -338,17 +338,17 @@ const unsubscribeChannel = asyncHandler(async (req, res) => {
         subscribers: channel?.subscribers - 1,
         unsubscribers: channel?.unsubscribers + 1,
       },
-      $pull:{
+      $pull: {
         subscribedBy: user?._id,
       },
       $push: {
         unsubscribedBy: user?._id,
-      }
+      },
     },
     {
       new: true,
     }
-  )
+  );
 
   // if channel is not found
   if (!unsubscribedChannel) {
@@ -370,15 +370,14 @@ const unsubscribeChannel = asyncHandler(async (req, res) => {
 
   // return the success response
   return res
-  .status(200)
-  .json(
-    new ApiResponse(
-      200,
-      unsubscribedChannel,
-      "You've unsubscribed from this channel successfully"
-    )
-  )
-
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        unsubscribedChannel,
+        "You've unsubscribed from this channel successfully"
+      )
+    );
 });
 
 export {
